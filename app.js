@@ -1,26 +1,13 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var fs = require('fs');
-var lyrics = 'node_modules/*';
-
-// write to a new file
-fs.writeFile('.gitignore', lyrics, function (err) {  
-    // rethrows an error, you could also catch it here
-    if (err) throw err;
-
-    // success case, the file was saved
-    console.log('node_modules/*');
-});
-
-fs.readFile('.gitignore', function (err, data) {
-  if (err) throw err;
-  if (data) {
-    console.log(data.toString('utf8'));
-  }
-});
+var dotenv = require('dotenv')
+dotenv.config()
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const passportSetup = require('./oauth-playlist/passport-setup')
+const cookieSession = require('cookie-session')
+const passport = require('passport')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -28,9 +15,24 @@ var authRoutes = require('./routes/auth-routes')
 
 var app = express();
 
+// Db connection
+require('./models/db');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+app.use(cookieSession({
+  // One day
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: [process.env.cookieKey]
+}))
+
+//initialize passport
+app.use(passport.initialize())
+app.use(passport.session())
+
+
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,11 +1,3 @@
-// const { MongoClient, ServerApiVersion } = require('mongodb');
-// const uri = "mongodb+srv://fowwest7494:<password>@cluster0.qvdngap.mongodb.net/?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-// client.connect(err => {
-//   const collection = client.db("Dropship_site").collection("users");
-//   // perform actions on the collection object
-//   client.close();
-// });
 var mongoose = require('mongoose');
 var ServerApiVersion = require('mongodb');
 var dbURI = 'mongodb://localhost:27017/passport-auth';
@@ -58,8 +50,5 @@ process.on('SIGTERM', function(){
 });
 
 // Require schemas
-
 require('./User');
 
-// If using in another application; "npm remove mongoose" 
-// then "npm install mongoose@4.10.8 --save". Upgrading is not always the best option.

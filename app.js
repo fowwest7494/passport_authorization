@@ -5,7 +5,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const passportSetup = require('./oauth-playlist/passport-setup')
+const passportSetup = require('./oauth/passport-setup')
 const cookieSession = require('cookie-session')
 const passport = require('passport')
 
